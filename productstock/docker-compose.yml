@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  product-stock-postgres:
+    image: postgres:14.2
+    container_name: product-stock-db-postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: productstock
+    ports:
+      - "5432:5432"
+    networks:
+      - product-stock-postgres-network
+
+networks:
+  product-stock-postgres-network:
