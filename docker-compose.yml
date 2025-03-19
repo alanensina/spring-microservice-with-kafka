@@ -14,5 +14,19 @@ services:
     networks:
       - product-stock-postgres-network
 
+  order-postgres:
+    image: postgres:14.2
+    container_name: order-db-postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: order
+    ports:
+      - "5433:5432"
+    networks:
+      - order-postgres-network
+
 networks:
   product-stock-postgres-network:
+  order-postgres-network:
