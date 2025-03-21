@@ -79,16 +79,7 @@ public class UserService {
     }
 
     public ResponseEntity<UserDTO> findById(UUID userId) {
-        try{
-            Optional<User> opt = userRepository.findById(userId);
-
-            if(opt.isEmpty()){
-                String errorMessage = "User not found. userId: " + userId;
-                LOGGER.error(errorMessage);
-                throw new UserErrorException(errorMessage, HttpStatus.BAD_REQUEST);
-            }
-
-            User user = opt.get();
+            User user = findUserById(userId);
 
             //TODO: need to fetch the user's orders
             return ResponseEntity.ok(new UserDTO(
@@ -97,6 +88,20 @@ public class UserService {
                     user.getEmail(),
                     null)
             );
+    }
+
+    public User findUserById(UUID userId){
+        try {
+            Optional<User> opt = userRepository.findById(userId);
+
+            if (opt.isEmpty()) {
+                String errorMessage = "User not found. userId: " + userId;
+                LOGGER.error(errorMessage);
+                throw new UserErrorException(errorMessage, HttpStatus.BAD_REQUEST);
+            }
+
+            return opt.get();
+
         } catch (Exception e) {
             String errorMessage = "Error to get find an user. Error message: " + e.getMessage();
             LOGGER.error(errorMessage);

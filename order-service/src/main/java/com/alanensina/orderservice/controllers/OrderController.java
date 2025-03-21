@@ -1,6 +1,7 @@
 package com.alanensina.orderservice.controllers;
 
-import com.alanensina.basedomains.dto.order.OrderDTO;
+import com.alanensina.basedomains.dto.order.OrderCreateRequestDTO;
+import com.alanensina.basedomains.dto.order.OrderCreateResponseDTO;
 import com.alanensina.orderservice.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO dto){
+    public ResponseEntity<OrderCreateResponseDTO> createOrder(@RequestBody OrderCreateRequestDTO dto){
         return orderService.create(dto);
     }
 }
