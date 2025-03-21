@@ -30,6 +30,20 @@ services:
     networks:
       - kafka-network
 
+  order-database-postgres:
+    image: postgres:14.2
+    container_name: order-db-postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: order
+    ports:
+      - "5432:5432"
+    networks:
+      - order-postgres-network
+
 networks:
   zookeeper-network:
   kafka-network:
+  order-postgres-network:

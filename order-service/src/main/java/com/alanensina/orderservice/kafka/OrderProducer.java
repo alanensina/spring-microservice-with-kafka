@@ -1,6 +1,6 @@
 package com.alanensina.orderservice.kafka;
 
-import com.alanensina.basedomains.dto.OrderEvent;
+import com.alanensina.basedomains.dto.order.OrderEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

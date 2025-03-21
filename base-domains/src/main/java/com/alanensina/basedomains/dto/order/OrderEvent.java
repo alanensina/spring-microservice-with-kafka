@@ -1,4 +1,4 @@
-package com.alanensina.basedomains.dto;
+package com.alanensina.basedomains.dto.order;
 
 import java.io.Serializable;
 

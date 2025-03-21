@@ -1,9 +1,10 @@
-package com.alanensina.basedomains.dto;
+package com.alanensina.basedomains.dto.order;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record OrderDTO(
-        String orderId,
+        UUID orderId,
         String name,
         int quantity,
         BigDecimal price
