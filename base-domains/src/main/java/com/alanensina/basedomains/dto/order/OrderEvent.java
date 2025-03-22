@@ -40,4 +40,13 @@ public class OrderEvent implements Serializable {
     public void setOrder(OrderDTO order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "OrderEvent{" +
+                "message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", order=" + order +
+                '}';
+    }
 }
