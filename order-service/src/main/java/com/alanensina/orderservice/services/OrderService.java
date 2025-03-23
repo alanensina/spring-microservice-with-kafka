@@ -6,8 +6,7 @@ import com.alanensina.basedomains.dto.order.OrderDTO;
 import com.alanensina.basedomains.dto.order.OrderEvent;
 import com.alanensina.basedomains.enums.OrderStatus;
 import com.alanensina.basedomains.exceptions.OrderErrorException;
-import com.alanensina.basedomains.exceptions.UserErrorException;
-import com.alanensina.orderservice.domains.Order;
+ import com.alanensina.orderservice.domains.Order;
 import com.alanensina.orderservice.domains.User;
 import com.alanensina.orderservice.kafka.OrderProducer;
 import com.alanensina.orderservice.repositories.OrderRepository;
@@ -46,33 +45,31 @@ public class OrderService {
         newOrder.setStatus(OrderStatus.CREATED);
 
         try{
-            LOGGER.info(String.format("Saving order: %s", newOrder));
             newOrder = orderRepository.save(newOrder);
-            LOGGER.info(String.format("Order saved successfully: %s", newOrder));
         } catch (Exception e) {
             String errorMessage = "Error to save an order. Order: " + newOrder + ". Error message: " + e.getMessage();
             LOGGER.error(errorMessage);
             throw new OrderErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        OrderDTO orderDTO = new OrderDTO(newOrder.getOrderId(),
+                user.getUserId(),
+                newOrder.getDate(),
+                newOrder.getStatus().name(),
+                newOrder.isPaid(),
+                newOrder.getTotalPrice());
+
+        OrderEvent event = new OrderEvent();
+        event.setOrder(orderDTO);
+        event.setMessage("Order created.");
+        event.setStatus(orderDTO.status());
+
         try{
-            OrderDTO orderDTO = new OrderDTO(newOrder.getOrderId(),
-                    user.getUserId(),
-                    newOrder.getDate(),
-                    newOrder.getStatus().name(),
-                    newOrder.isPaid(),
-                    newOrder.getTotalPrice());
-
-            OrderEvent event = new OrderEvent();
-            event.setOrder(orderDTO);
-            event.setMessage("Order created.");
-            event.setStatus(orderDTO.status());
-
-            LOGGER.info(String.format("Sending event via OrderProducer: %s", event));
             orderProducer.sendMessage(event);
-            LOGGER.info(String.format("Event sent: %s", event));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            String errorMessage = "Error to send event to Kafka. Event: " + event + ". Error message: " + e.getMessage();
+            LOGGER.error(errorMessage);
+            throw new OrderErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return ResponseEntity.ok(new OrderCreateResponseDTO(

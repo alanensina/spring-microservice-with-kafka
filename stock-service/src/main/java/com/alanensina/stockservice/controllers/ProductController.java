@@ -1,0 +1,31 @@
+package com.alanensina.stockservice.controllers;
+
+import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
+import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
+import com.alanensina.basedomains.dto.product.ProductDTO;
+import com.alanensina.stockservice.services.ProductService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/product")
+public class ProductController {
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductCreateResponseDTO> create(@RequestBody ProductCreateRequestDTO dto){
+        return productService.create(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> list(){
+        return productService.getAll();
+    }
+}

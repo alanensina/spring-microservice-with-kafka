@@ -35,9 +35,7 @@ public class UserService {
         newUser.setEmail(data.email());
 
         try{
-            LOGGER.info(String.format("Saving user: %s", newUser));
             newUser = userRepository.save(newUser);
-            LOGGER.info(String.format("User saved successfully: %s", newUser));
 
             return ResponseEntity.ok(
                     new UserCreateResponseDTO(
