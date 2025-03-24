@@ -1,9 +1,6 @@
 package com.alanensina.orderservice.domains;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -15,9 +12,14 @@ public class OrderProducts {
     @GeneratedValue
     private UUID orderProductsId;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    private UUID orderId;
-    private UUID productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     private int quantity;
 
     public UUID getOrderProductsId() {
@@ -28,20 +30,20 @@ public class OrderProducts {
         this.orderProductsId = orderProductsId;
     }
 
-    public UUID getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public UUID getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(UUID productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {

@@ -1,11 +1,11 @@
 package com.alanensina.orderservice.domains;
 
-
 import com.alanensina.basedomains.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +28,9 @@ public class Order {
 
     private boolean paid;
     private BigDecimal totalPrice;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProducts> products;
 
 
     public UUID getOrderId() {
@@ -78,15 +81,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", userId=" + user.getUserId() +
-                ", date=" + date +
-                ", status=" + status.name() +
-                ", paid=" + paid +
-                ", totalPrice=" + totalPrice +
-                '}';
+    public List<OrderProducts> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<OrderProducts> products) {
+        this.products = products;
     }
 }
