@@ -1,12 +1,12 @@
-package com.alanensina.stockservice.services;
+package com.alanensina.orderservice.services;
 
 import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
 import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
 import com.alanensina.basedomains.dto.product.ProductDTO;
 import com.alanensina.basedomains.dto.product.ProductQuantityResponseDTO;
 import com.alanensina.basedomains.exceptions.ProductErrorException;
-import com.alanensina.stockservice.domains.Product;
-import com.alanensina.stockservice.repositories.ProductRepository;
+import com.alanensina.orderservice.domains.Product;
+import com.alanensina.orderservice.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

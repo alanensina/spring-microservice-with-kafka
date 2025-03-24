@@ -4,6 +4,7 @@ services:
 
   kafka:
     image: bitnami/kafka:latest
+    container_name: kafka
     ports:
       - "9094:9094"
     networks:
@@ -20,7 +21,7 @@ services:
 
   order-database-postgres:
     image: postgres:14.2
-    container_name: order-db-postgres
+    container_name: postgres-database
     restart: always
     environment:
       POSTGRES_PASSWORD: password

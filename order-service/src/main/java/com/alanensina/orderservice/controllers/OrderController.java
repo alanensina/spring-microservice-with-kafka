@@ -22,9 +22,4 @@ public class OrderController {
     public ResponseEntity<OrderCreateResponseDTO> createOrder(@RequestBody OrderCreateRequestDTO dto){
         return orderService.create(dto);
     }
-
-    @GetMapping
-    public ResponseEntity<List<OrderCreateResponseDTO>> list(){
-        return orderService.list();
-    }
 }

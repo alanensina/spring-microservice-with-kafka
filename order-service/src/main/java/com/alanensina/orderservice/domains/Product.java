@@ -1,4 +1,4 @@
-package com.alanensina.stockservice.domains;
+package com.alanensina.orderservice.domains;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

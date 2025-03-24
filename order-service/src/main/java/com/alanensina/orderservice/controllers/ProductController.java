@@ -1,10 +1,10 @@
-package com.alanensina.stockservice.controllers;
+package com.alanensina.orderservice.controllers;
 
 import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
 import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
 import com.alanensina.basedomains.dto.product.ProductDTO;
 import com.alanensina.basedomains.dto.product.ProductQuantityResponseDTO;
-import com.alanensina.stockservice.services.ProductService;
+import com.alanensina.orderservice.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
