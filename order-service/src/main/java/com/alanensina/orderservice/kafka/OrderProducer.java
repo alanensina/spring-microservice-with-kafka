@@ -1,6 +1,6 @@
 package com.alanensina.orderservice.kafka;
 
-import com.alanensina.basedomains.dto.order.OrderEvent;
+import com.alanensina.basedomains.dto.order.OrderEventDTO;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 public class OrderProducer {
 
     private final NewTopic topic;
-    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
+    private final KafkaTemplate<String, OrderEventDTO> kafkaTemplate;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderProducer.class);
 
-    public OrderProducer(NewTopic topic, KafkaTemplate<String, OrderEvent> kafkaTemplate) {
+    public OrderProducer(NewTopic topic, KafkaTemplate<String, OrderEventDTO> kafkaTemplate) {
         this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(OrderEvent event){
+    public void sendMessage(OrderEventDTO event){
         LOGGER.info(String.format("Sending Order event -> %s", event.toString()));
 
         try{

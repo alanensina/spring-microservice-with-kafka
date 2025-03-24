@@ -4,10 +4,9 @@ import com.alanensina.basedomains.dto.order.OrderCreateRequestDTO;
 import com.alanensina.basedomains.dto.order.OrderCreateResponseDTO;
 import com.alanensina.orderservice.services.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -22,5 +21,10 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderCreateResponseDTO> createOrder(@RequestBody OrderCreateRequestDTO dto){
         return orderService.create(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrderCreateResponseDTO>> list(){
+        return orderService.list();
     }
 }

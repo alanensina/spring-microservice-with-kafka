@@ -3,6 +3,7 @@ package com.alanensina.stockservice.services;
 import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
 import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
 import com.alanensina.basedomains.dto.product.ProductDTO;
+import com.alanensina.basedomains.dto.product.ProductQuantityResponseDTO;
 import com.alanensina.basedomains.exceptions.ProductErrorException;
 import com.alanensina.stockservice.domains.Product;
 import com.alanensina.stockservice.repositories.ProductRepository;
@@ -66,6 +67,26 @@ public class ProductService {
             ));
         } catch (Exception e) {
             String errorMessage = "Error to save a product: " + newProduct + ". Error message: " + e.getMessage();
+            LOGGER.error(errorMessage);
+            throw new ProductErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<ProductQuantityResponseDTO>> getAvailableProducts() {
+
+        try{
+            List<Product> products = productRepository.findByAvailableTrue();
+
+            return ResponseEntity.ok(
+                    products.stream().map(
+                            product -> new ProductQuantityResponseDTO(
+                                    product.getProductId(),
+                                    product.getName(),
+                                    product.getStock())
+                    ).toList()
+            );
+        } catch (Exception e) {
+            String errorMessage = "Error to get available products. Error message: " + e.getMessage();
             LOGGER.error(errorMessage);
             throw new ProductErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }

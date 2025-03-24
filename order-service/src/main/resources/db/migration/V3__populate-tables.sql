@@ -12,3 +12,5 @@ INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_ran
 INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_random_uuid(), 'Apple iPhone 16 Pro Max', 1489.00, true, 150);
 INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_random_uuid(), 'Apple MacBook Air M4', 1249.00, true, 100);
 INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_random_uuid(), 'Apple MacBook Pro M4', 1949.00, true, 100);
+INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_random_uuid(), 'Nintendo Switch OLED', 349.00, false, 0);
+INSERT INTO PRODUCTS (product_id, name, price, available, stock) values (gen_random_uuid(), 'PS4 Slim', 249.00, false, 0);

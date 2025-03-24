@@ -1,10 +1,12 @@
 package com.alanensina.basedomains.dto.order;
 
-import java.math.BigDecimal;
+import com.alanensina.basedomains.dto.product.ProductOrderRequestDTO;
+
+import java.util.List;
 import java.util.UUID;
 
 public record OrderCreateRequestDTO(
         UUID userId,
-        BigDecimal totalPrice
+        List<ProductOrderRequestDTO> products
 ) {
 }

@@ -1,4 +1,4 @@
-package com.alanensina.stockservice.kafka;
+package com.alanensina.emailservice.kafka;
 
 import com.alanensina.basedomains.dto.order.OrderEventDTO;
 import org.slf4j.Logger;
@@ -16,10 +16,9 @@ public class OrderConsumer {
             groupId = "${spring.kafka.consumer.group-id}"
     )
     public void consume(OrderEventDTO event){
-        LOGGER.info(String.format("Order event received in Stock-Service. %s", event.toString()));
+        LOGGER.info(String.format("Order event received in Email-Service. %s", event.toString()));
 
-        //TODO: need to call the StockService to save the products
-
+        //TODO: Need to call the email service to send the email
 
     }
 }
