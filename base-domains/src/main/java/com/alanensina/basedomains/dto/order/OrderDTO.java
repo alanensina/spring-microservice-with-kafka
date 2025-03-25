@@ -2,6 +2,7 @@ package com.alanensina.basedomains.dto.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record OrderDTO(
@@ -10,6 +11,7 @@ public record OrderDTO(
         LocalDateTime date,
         String status,
         boolean paid,
-        BigDecimal totalPrice
+        BigDecimal totalPrice,
+        List<OrderProductsDTO> products
 ) {
 }

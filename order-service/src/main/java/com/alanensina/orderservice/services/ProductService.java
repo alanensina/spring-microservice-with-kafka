@@ -1,9 +1,6 @@
 package com.alanensina.orderservice.services;
 
-import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
-import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
-import com.alanensina.basedomains.dto.product.ProductDTO;
-import com.alanensina.basedomains.dto.product.ProductQuantityResponseDTO;
+import com.alanensina.basedomains.dto.product.*;
 import com.alanensina.basedomains.exceptions.ProductErrorException;
 import com.alanensina.orderservice.domains.Product;
 import com.alanensina.orderservice.repositories.ProductRepository;
@@ -14,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -72,21 +71,67 @@ public class ProductService {
         }
     }
 
-    public ResponseEntity<List<ProductQuantityResponseDTO>> getAvailableProducts() {
-
+    public List<ProductQuantityResponseDTO> getAvailableProductList(){
         try{
             List<Product> products = productRepository.findByAvailableTrue();
 
-            return ResponseEntity.ok(
+            return
                     products.stream().map(
                             product -> new ProductQuantityResponseDTO(
                                     product.getProductId(),
                                     product.getName(),
                                     product.getStock())
-                    ).toList()
-            );
+                    ).toList();
         } catch (Exception e) {
             String errorMessage = "Error to get available products. Error message: " + e.getMessage();
+            LOGGER.error(errorMessage);
+            throw new ProductErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<ProductQuantityResponseDTO>> getAvailableProducts() {
+        return ResponseEntity.ok(getAvailableProductList());
+    }
+
+    public ResponseEntity<ProductDTO> updateStock(UpdateProductStockByOrderDTO dto) {
+        Product product = updateStock(dto.productId(), dto.quantity());
+        return ResponseEntity.ok(new ProductDTO(
+                product.getProductId(),
+                product.getName(),
+                product.getPrice(),
+                product.isAvailable(),
+                product.getStock())
+        );
+    }
+
+    public Product updateStock(UUID productId, int quantity){
+
+        Optional<Product> opt = productRepository.findById(productId);
+
+        if(opt.isEmpty()){
+            String errorMessage = "Product not found. productId: " + productId;
+            LOGGER.error(errorMessage);
+            throw new ProductErrorException(errorMessage, HttpStatus.BAD_REQUEST);
+        }
+
+        Product product = opt.get();
+
+        if(product.getStock() == 0 || (product.getStock() - quantity) < 0){
+            String errorMessage = "Insuficient stock. productId: " + productId + ", Stock: " + product.getStock();
+            LOGGER.error(errorMessage);
+            throw new ProductErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        product.setStock(product.getStock() - quantity);
+
+        if(product.getStock() == 0){
+            product.setAvailable(false);
+        }
+
+        try{
+            return productRepository.save(product);
+        } catch (Exception e) {
+            String errorMessage = "Error to update stock. productId: " + productId + ", Error message: " + e.getMessage();
             LOGGER.error(errorMessage);
             throw new ProductErrorException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }

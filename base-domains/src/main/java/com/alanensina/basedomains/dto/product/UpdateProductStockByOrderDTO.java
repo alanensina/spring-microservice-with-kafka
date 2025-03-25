@@ -2,8 +2,8 @@ package com.alanensina.basedomains.dto.product;
 
 import java.util.UUID;
 
-public record UpdateProductStockByOrder(
-        UUID product,
+public record UpdateProductStockByOrderDTO(
+        UUID productId,
         int quantity
 ) {
 }

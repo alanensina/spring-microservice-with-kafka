@@ -1,12 +1,10 @@
 package com.alanensina.orderservice.controllers;
 
-import com.alanensina.basedomains.dto.product.ProductCreateRequestDTO;
-import com.alanensina.basedomains.dto.product.ProductCreateResponseDTO;
-import com.alanensina.basedomains.dto.product.ProductDTO;
-import com.alanensina.basedomains.dto.product.ProductQuantityResponseDTO;
+import com.alanensina.basedomains.dto.product.*;
 import com.alanensina.orderservice.services.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.alanensina.basedomains.dto.product.ProductDTO;
 
 import java.util.List;
 
@@ -33,5 +31,10 @@ public class ProductController {
     @GetMapping("/available")
     public ResponseEntity<List<ProductQuantityResponseDTO>> getAvailableProducts(){
         return productService.getAvailableProducts();
+    }
+
+    @PutMapping("/update-stock")
+    public ResponseEntity<ProductDTO> updateStock(@RequestBody UpdateProductStockByOrderDTO dto){
+        return productService.updateStock(dto);
     }
 }
