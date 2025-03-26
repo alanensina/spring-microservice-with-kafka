@@ -1,4 +1,6 @@
 package com.alanensina.basedomains.dto.order;
 
-public record OrderEventDTO(OrderDTO orderDTO)  {
+public record OrderEventDTO(
+        OrderDTO orderDTO
+)  {
 }

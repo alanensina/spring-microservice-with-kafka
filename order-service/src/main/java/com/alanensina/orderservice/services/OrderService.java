@@ -67,6 +67,8 @@ public class OrderService {
 
         OrderDTO orderDTO = new OrderDTO(newOrder.getOrderId(),
                 user.getUserId(),
+                user.getName(),
+                user.getEmail(),
                 newOrder.getDate(),
                 newOrder.getStatus().name(),
                 newOrder.isPaid(),
@@ -95,7 +97,15 @@ public class OrderService {
 
     private List<OrderProductsDTO> getOrderProductsDTO(List<OrderProducts> products) {
         return products.stream().map(
-                p -> new OrderProductsDTO(p.getProduct().getProductId(), 0)
+                p -> new OrderProductsDTO(
+                        p.getProduct().getProductId(),
+                        p.getProduct().getName(),
+                        p.getProduct().getPrice(),
+                        p.getProduct().getPrice()
+                                .multiply(BigDecimal.valueOf(
+                                        p.getQuantity())),
+                        p.getQuantity()
+                        )
         ).toList();
     }
 

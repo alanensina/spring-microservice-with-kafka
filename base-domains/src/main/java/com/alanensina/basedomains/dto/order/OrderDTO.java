@@ -8,6 +8,8 @@ import java.util.UUID;
 public record OrderDTO(
         UUID orderId,
         UUID userId,
+        String name,
+        String email,
         LocalDateTime date,
         String status,
         boolean paid,
