@@ -32,9 +32,4 @@ public class ProductController {
     public ResponseEntity<List<ProductQuantityResponseDTO>> getAvailableProducts(){
         return productService.getAvailableProducts();
     }
-
-    @PutMapping("/update-stock")
-    public ResponseEntity<ProductDTO> updateStock(@RequestBody UpdateProductStockByOrderDTO dto){
-        return productService.updateStock(dto);
-    }
 }

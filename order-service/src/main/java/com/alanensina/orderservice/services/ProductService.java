@@ -93,17 +93,6 @@ public class ProductService {
         return ResponseEntity.ok(getAvailableProductList());
     }
 
-    public ResponseEntity<ProductDTO> updateStock(UpdateProductStockByOrderDTO dto) {
-        Product product = updateStock(dto.productId(), dto.quantity());
-        return ResponseEntity.ok(new ProductDTO(
-                product.getProductId(),
-                product.getName(),
-                product.getPrice(),
-                product.isAvailable(),
-                product.getStock())
-        );
-    }
-
     public Product updateStock(UUID productId, int quantity){
 
         Optional<Product> opt = productRepository.findById(productId);
